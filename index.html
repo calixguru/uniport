@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Uniport Chemical Engineering Society</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<!-- Favicon -->
+	<link rel="icon" type="image/png" sizes="32x32" href="https://www.nsche.org/img/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="https://www.nsche.org/img/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="https://www.nsche.org/img/apple-touch-icon.png">
+	<link rel="shortcut icon" href="test4.png">
+
+
+<style>
+  body { font-family: 'Baloo 2', cursive; }
+
+  .hero-bg {
+    background-size: cover;
+    background-position: center;
+    animation: slideShow 20s infinite ease-in-out;
+  }
+
+  @keyframes slideShow {
+    0%   { background-image: url('background.jpg'); }
+    33%  { background-image: url('background.jpg?auto=compress&cs=tinysrgb&w=1200'); }
+    66%  { background-image: url('https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
+    100% { background-image: url('background.jpg'); }
+}
+</style>
+</head>
+
+<body class="bg-white">
+
+<!-- ================= LOGIN STATUS + PROTECTION ================= -->
+<script>
+  // Get user info from localStorage
+  const token = localStorage.getItem('token');
+  const userName = localStorage.getItem('name');
+
+  function protectPage() {
+    const protectedSections = document.querySelectorAll('[data-protected="true"]');
+    if (!token) { // Only show protected sections if token exists
+      protectedSections.forEach(sec => sec.classList.add('hidden'));
+    }
+  }
+
+  function updateNav() {
+    const loginBox = document.getElementById('loginStatus');
+    if (userName) {
+      loginBox.innerHTML = `
+        <span class="text-white-500 font-semibold mr-4">Welcome, ${userName}</span>
+        <button onclick="logout()" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Logout</button>
+      `;
+    } else {
+      loginBox.innerHTML = `
+        <a href="login.html" class="text-green-800 font-semibold hover:text-green-600 mr-4">Login</a>
+        <a href="register.html" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Register</a>
+      `;
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('name');
+    location.reload();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    protectPage();
+    updateNav();
+
+    // Mobile menu login
+    const mobileBox = document.getElementById('loginStatusMobile');
+    if (userName) {
+      mobileBox.innerHTML = `Welcome, ${userName} <br>
+        <button onclick="logout()" class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg">Logout</button>`;
+    } else {
+      mobileBox.innerHTML = `
+        <a href="login.html" class="font-bold m-3">Login</a> OR
+        <a href="register.html" class="font-bold m-3">Register</a>
+      `;
+    }
+  });
+
+  // Mobile menu toggle
+  document.getElementById('menuBtn').onclick = () => {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  };
+</script>
+
+
+<!-- ================= HEADER ================= -->
+<header class="w-full fixed top-0 left-0 z-50 backdrop-blur-lg bg-white/70 border-b border-green-100">
+  <div class="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
+
+    <!-- Logo + Title -->
+    <div class="flex items-center gap-2">
+      <img src="https://www.nsche.org/img/apple-touch-icon.png" class="w-10 h-10">
+      <span class="text-green-800 text-2xl font-extrabold">NSChE UNIPORT</span>
+    </div>
+
+    <!-- Desktop Navigation -->
+    <nav class="hidden md:flex items-center gap-6 font-medium">
+
+      <a class="hover:text-green-700 transition" href="#home">Home</a>
+      <a class="hover:text-green-700 transition" href="#about">About</a>
+
+      <!-- PAST PRESIDENTS DROPDOWN -->
+      <div class="relative group">
+        <button class="hover:text-green-700 transition">Past Presidents ▾</button>
+
+        <div class="absolute left-0 mt-2 w-64 bg-white text-green-800 rounded-md shadow-lg border border-green-100 opacity-0 group-hover:opacity-100 transition-all duration-200 max-h-96 overflow-y-auto">
+          <p class="px-4 py-3 bg-green-50 font-semibold">Past Presidents</p>
+          <ul class="divide-y divide-green-200">
+            <li class="px-4 py-2 hover:bg-green-100">Ipenko Jare (2025–Present)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Archibong Udo (2024–2025)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Sampson Goodluck (2023–2024)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Joshua Godson (2022–2023)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Joe Solomon (2021–2022)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Alexis Amachree (2019–2020)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Naziga Ledum (2017–2018)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Charles Nwakwe (2016–2017)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Charles Monday (2015–2016)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Okorharen Jude Nelson (2014–2016)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Uduh Emeka Victor (2013–2014)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Umerah Olisaemeka (2012–2013)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Mordi Collins Ubaka (2011–2012)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ehigimetor Alfred (2010–2011)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Akran Iniobong (2009–2010)</li>
+            <li class="px-4 py-2 hover:bg-green-100">UgoH Festus (2008–2009)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ovumata Stephen O (2007–2008)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Alozie Enyichukwu C (2006–2007)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Agorom Vincent C (2005–2006)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Akpuhi O. Jewsey (2004–2005)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Mmebo Chinedu (2002–2004)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Diamond Diepreye (2001–2002)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Kamani Stephen (2000–2001)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ekanem Effiok (1999–2000)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Dike John (1998–1999)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ihuaha Ronald M (1997–1998)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Etowa Christian B (1996–1997)</li>
+        </ul>
+
+
+        </div>
+      </div>
+
+      <a class="hover:text-green-700 transition" href="documents.html">Resource</a>
+      <a class="hover:text-green-700 transition" href="#contact">Contact</a>
+
+      <div id="loginStatus"></div>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <button id="menuBtn" class="md:hidden text-green-700 text-3xl">☰</button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="hidden bg-white border-t border-green-200 shadow-md md:hidden cursor-pointer">
+    <nav class="flex flex-col p-4 space-y-4 text-green-800 font-medium">
+
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+
+      <!-- MOBILE PAST PRESIDENTS SCROLLABLE -->
+      <div class="border border-green-200 rounded-md">
+        <p class="px-4 py-3 bg-green-50 font-semibold">Past Presidents</p>
+        <div class="max-h-64 overflow-y-auto">
+          <ul class="divide-y divide-green-200">
+            <li class="px-4 py-2 hover:bg-green-100">Ipenko Jare (2025–Present)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Archibong Udo (2024–2025)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Sampson Goodluck (2023–2024)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Joshua Godson (2022–2023)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Joe Solomon (2021–2022)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Alexis Amachree (2019–2020)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Naziga Ledum (2017–2018)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Charles Nwakwe (2016–2017)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Charles Monday (2015–2016)</li>
+
+            <li class="px-4 py-2 hover:bg-green-100">Okorharen Jude Nelson (2014–2016)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Uduh Emeka Victor (2013–2014)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Umerah Olisaemeka (2012–2013)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Mordi Collins Ubaka (2011–2012)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ehigimetor Alfred (2010–2011)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Akran Iniobong (2009–2010)</li>
+            <li class="px-4 py-2 hover:bg-green-100">UgoH Festus (2008–2009)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ovumata Stephen O (2007–2008)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Alozie Enyichukwu C (2006–2007)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Agorom Vincent C (2005–2006)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Akpuhi O. Jewsey (2004–2005)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Mmebo Chinedu (2002–2004)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Diamond Diepreye (2001–2002)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Kamani Stephen (2000–2001)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ekanem Effiok (1999–2000)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Dike John (1998–1999)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Ihuaha Ronald M (1997–1998)</li>
+            <li class="px-4 py-2 hover:bg-green-100">Etowa Christian B (1996–1997)</li>
+        </ul>
+
+        </div>
+      </div>
+
+      <a href="documents.html">Resource</a>
+      <a href="#contact">Contact</a>
+      <div id="loginStatusMobile"></div>
+    </nav>
+  </div>
+</header>
+
+
+
+<script>
+  document.getElementById('menuBtn').onclick = () => {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileBox = document.getElementById('loginStatusMobile');
+    if (user) {
+      mobileBox.innerHTML = `Welcome, ${user} <br><button onclick="logout()" class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg">Logout</button>`;
+    } else {
+      mobileBox.innerHTML = `
+        <a href="login.html" class="font-bold m-3">Login</a>  OR 
+        <a href="register.html" class="font-bold m-3">Register</a>
+      `;
+    }
+  });
+</script>
+
+<!-- ================= HERO (SLIDER) ================= -->
+<section id="home" class="pt-28 pb-24 hero-bg relative">
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 items-center">
+    <div class="text-white">
+      <h1 class="text-2xl md:text-3xl font-extrabold leading-tight mb-5 uppercase">
+        Welcome to the Nigerian Society of Chemical Engineers<br>
+        <span class="text-green-300">University of Port Harcourt</span>
+      </h1>
+
+      <p class="text-md font-bold text-gray-100 mb-8">
+        We’re excited to have you step into a community built on curiosity and problem solving. Here, you’ll be engage in hands on learning through our Technical Interest Group (TIG) and loads of innovative projects and collaborative initiatives that shape real world engineers. You’re very much welcome to take part in our workshops, seminars, debates/annual quiz and other student driven activities designed to strengthen your skills and broaden your perspective. Together, we can achieve a lot!
+      </p>
+
+      <div class="flex gap-4">
+        <a data-protected="true" href="documents.html"
+          class="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition">
+          View Materials
+        </a>
+
+        <a href="register.html"
+          class="px-6 py-3 bg-white/20 border border-white text-white font-semibold rounded-xl hover:bg-white/30 transition">
+          Become a Member
+        </a>
+      </div>
+    </div>
+
+    <div class="relative hidden md:block">
+<!--       <div class="w-full h-80 bg-white/10 rounded-3xl"></div>
+      <div class="absolute inset-0 m-4 bg-white rounded-3xl flex items-center justify-center p-6">
+        <img src="https://www.nsche.org/img/apple-touch-icon.png" class="w-40" alt="hero">
+      </div>
+    </div> -->
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <h2 class="text-4xl font-extrabold text-green-900 text-center mb-4">
+      ABOUT NSChE UNIPORT
+    </h2>
+
+    <p class="text-gray-700 text-center max-w-3xl mx-auto mb-12 text-lg">
+      NSChE UNIPORT promotes academic excellence,
+      research, industry exposure, and leadership development.
+    </p>
+
+    <div class="flex justify-center">
+      <div class="grid md:grid-cols-2 gap-10 place-items-center">
+
+        <div class="bg-green-50 p-8 rounded-3xl shadow-md hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold text-green-800 mb-3 text-center uppercase">Our Mission</h3>
+          <p class="text-gray-700">
+            Our mission is to promote the image and interests of the Chemical Engineering Department, strengthen affiliations with state, national, as well as professional bodies, encourage peaceful and productive relationships among students and staff, and provide a vibrant platform for knowledge exchange through seminars, conferences, meetings, and technical activities.
+          </p>
+        </div>
+
+        <div class="bg-green-50 p-8 rounded-3xl shadow-md hover:shadow-xl transition">
+          <h3 class="text-2xl font-bold text-green-800 mb-3 text-center uppercase">Our Vision</h3>
+          <p class="text-gray-700">
+            To build a unified, reputable, and well connected Chemical Engineering community that fosters excellence and collaboration among our students.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= ACTIVITIES ================= -->
+<section id="team" class="py-20 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-6">
+      
+    <h2 class="text-4xl font-extrabold text-center text-gray-800 mb-12 uppercase tracking-wide">
+      EXECUTIVE MEMBERS
+    </h2>
+
+
+    <div id="teamContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <!-- JS Renders Cards Here -->
+    </div>
+
+  </div>
+</section>
+
+
+
+<script>
+let allTeam = [];
+
+// Fetch team members (same API endpoint)
+async function fetchTeam() {
+  try {
+    const res = await fetch('http://127.0.0.1:8000/api/activities/'); 
+    allTeam = await res.json();
+    renderTeam(allTeam);
+  } catch (err) {
+    console.error(err);
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Failed to load team members.',
+      timer: 4000,
+      timerProgressBar: true
+    });
+  }
+}
+
+// Render team cards
+function renderTeam(teamList) {
+  const container = document.getElementById('teamContainer');
+  container.innerHTML = '';
+
+  if (!teamList.length) {
+    container.innerHTML =
+      '<p class="text-center text-gray-600 col-span-3">No team members found.</p>';
+    return;
+  }
+
+  teamList.forEach(member => {
+    container.innerHTML += `
+      <div class="text-center duration-300">
+        <img src="${member.image}" 
+             alt="Team Member"
+             class="w-40 h-40 rounded-full mx-auto object-cover mb-4 border-4 border-green-500 shadow-md">
+        
+        <h3 class="text-xl font-bold text-gray-800">${member.name}</h3>
+
+        <p class="mt-3 text-green-600 font-extrabold text-xl uppercase">${member.position}</p>
+
+      </div>
+    `;
+  });
+}
+
+
+fetchTeam();
+</script>
+
+
+
+<!-- ================= CTA ================= -->
+<section class="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
+  <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+
+    <div>
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-2">
+        Join the Future of Chemical Engineering
+      </h2>
+      <p class="text-lg text-green-100">
+        Become part of a society built for innovation and excellence.
+      </p>
+    </div>
+
+    <a href="register.html"
+       class="px-8 py-4 bg-white text-green-700 font-bold rounded-xl shadow-lg hover:bg-green-50 transition">
+      Become a Member
+    </a>
+
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer id="contact" class="bg-green-900 text-white pt-16 pb-10">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+
+    <!-- ABOUT US -->
+    <div>
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md">
+          <span class="text-green-800 font-bold text-2xl"></span>
+        </div>
+        <h3 class="text-2xl font-bold">About Us</h3>
+      </div>
+
+      <p class="text-green-200">
+        Uniport Chemical Engineering Society building excellence, innovation,
+        and leadership for student engineers.
+      </p>
+    </div>
+
+    <!-- EMPTY COLUMN -->
+    <div></div>
+
+    <!-- SOCIALS & CONTACT -->
+    <div>
+      <h3 class="text-2xl font-bold">Socials & Contact</h3>
+
+      <!-- CLICKABLE EMAIL & PHONE -->
+      <p class="text-green-200">
+        Email: 
+        <a href="mailto:Uniportnschechapter@gmail.com" class="underline hover:text-white">
+          Uniportnschechapter@gmail.com
+        </a><br/>
+        Phone:
+        <a href="tel:+2348149141880" class="underline hover:text-white">
+          +234 814 914 1880
+        </a><br/>
+        Uniport, Rivers State, Nigeria.
+      </p>
+
+      <!-- SOCIAL ICONS -->
+      <div class="flex gap-4 mt-4">
+
+        <!-- Facebook -->
+        <a href="https://www.facebook.com/share/17myx5d396/?mibextid=wwXIfr" target="_blank"
+           class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-6 h-6">
+            <path d="M22 12A10 10 0 1 0 10 21.95V14H7v-3h3V8.5A4.5 4.5 0 0 1 14.5 4h3v3h-3A1.5 1.5 0 0 0 13 8.5V11h4l-1 3h-3v7A10 10 0 0 0 22 12Z"/>
+          </svg>
+        </a>
+
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/company/nsche-uniport-chapter" target="_blank"
+           class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-6 h-6">
+            <path d="M4.98 3.5C4.98 4.88 3.88 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.1c.5-.9 1.8-2.2 3.9-2.2 4.2 0 5 2.8 5 6.3V24h-4v-7.7c0-1.8 0-4.1-2.5-4.1-2.5 0-2.9 2-2.9 4V24h-4V8z"/>
+          </svg>
+        </a>
+
+        <!-- Twitter / X -->
+        <a href="https://x.com/nscheuniport" target="_blank"
+           class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-6 h-6">
+            <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.26 4.26 0 0 0 1.88-2.35 8.46 8.46 0 0 1-2.7 1.03A4.22 4.22 0 0 0 12 9.15a12 12 0 0 1-8.72-4.42 4.22 4.22 0 0 0 1.31 5.63 4.18 4.18 0 0 1-1.91-.53v.05a4.22 4.22 0 0 0 3.38 4.14c-.47.13-.97.2-1.48.2-.36 0-.71-.03-1.05-.1a4.23 4.23 0 0 0 3.94 2.93A8.49 8.49 0 0 1 2 19.54c-.33 0-.66-.02-.99-.06A12 12 0 0 0 8.29 21c7.55 0 11.68-6.26 11.68-11.68v-.53A8.27 8.27 0 0 0 22.46 6Z"/>
+          </svg>
+        </a>
+
+        <!-- Email Icon -->
+        <a href="mailto:Uniportnschechapter@gmail.com"
+           class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" class="w-6 h-6">
+            <path d="M2 4h20v16H2V4zm10 7 8-5H4l8 5zm0 2-8-5v10h16V8l-8 5z"/>
+          </svg>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="mt-12 border-t border-green-700 pt-6 text-center text-green-300 text-sm">
+    © 2025 Uniport Chemical Engineering Society — All Rights Reserved.
+  </div>
+</footer>
+
+
+
+</body>
+</html>

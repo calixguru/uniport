@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Activities</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 p-10">
+
+<h1 class="text-3xl font-bold mb-6">Manage Activities</h1>
+
+<p class="text-md font-bold mb-6" id='code'></p>
+
+
+<!-- Add activity form -->
+<div class="mb-6 flex flex-col md:flex-row gap-3">
+  <input id="act_title" placeholder="Activity Title" class="px-3 py-2 border rounded">
+  <input id="act_date" type="date" class="px-3 py-2 border rounded">
+  <input id="act_venue" placeholder="Venue" class="px-3 py-2 border rounded">
+  <button onclick="addActivity()" class="px-4 py-2 bg-green-700 text-white rounded">Add</button>
+</div>
+
+<!-- Activity table -->
+<table class="min-w-full bg-white border">
+  <thead>
+    <tr class="bg-green-700 text-white">
+      <th class="px-4 py-2">Activity</th>
+      <th class="px-4 py-2">Date</th>
+      <th class="px-4 py-2">Venue</th>
+      <th class="px-4 py-2">Actions</th>
+    </tr>
+  </thead>
+  <tbody id="actTable"></tbody>
+</table>
+
+<!-- Modal -->
+<div id="modal" class="fixed inset-0 flex items-center justify-center bg-black/50 hidden">
+  <div class="bg-white rounded-lg p-6 w-80 shadow-lg text-center">
+    <p id="modalMessage" class="text-lg font-semibold mb-4"></p>
+    <button onclick="closeModal()" class="px-4 py-2 bg-green-700 text-white rounded">OK</button>
+  </div>
+</div>
+
+<script>
+const API = "http://127.0.0.1:8000/api";
+const userCode = localStorage.getItem("user_code");
+document.getElementById('code').innerText = userCode
+
+// Modal functions
+function showModal(msg) {
+    document.getElementById("modalMessage").innerText = msg;
+    document.getElementById("modal").classList.remove("hidden");
+}
+
+function closeModal() {
+    document.getElementById("modal").classList.add("hidden");
+}
+
+// Fetch activities
+async function fetchActivities() {
+    try {
+        const res = await fetch(`${API}/activities/`);
+        if (!res.ok) throw new Error("Failed to fetch activities");
+
+        const data = await res.json();
+        const tbody = document.getElementById("actTable");
+        tbody.innerHTML = '';
+        data.forEach(a => {
+            tbody.innerHTML += `
+                <tr class="border-b hover:bg-green-100 transition">
+                    <td class="px-4 py-2 font-semibold">${a.title}</td>
+                    <td class="px-4 py-2">${a.date}</td>
+                    <td class="px-4 py-2">${a.venue}</td>
+                    <td class="px-4 py-2">
+                        <button onclick="editActivity(${a.id})" class="px-2 py-1 bg-yellow-500 text-white rounded">Edit</button>
+                        <button onclick="deleteActivity(${a.id})" class="px-2 py-1 bg-red-600 text-white rounded">Delete</button>
+                    </td>
+                </tr>
+            `;
+        });
+    } catch (err) {
+        showModal("Error fetching activities");
+        console.error(err);
+    }
+}
+
+
+// Add activity
+async function addActivity() {
+    const title = document.getElementById("act_title").value.trim();
+    const date = document.getElementById("act_date").value;
+    const venue = document.getElementById("act_venue").value.trim();
+
+    if (!title || !date || !venue) {
+        showModal("Please fill all fields");
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API}/activities/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-User-Code": userCode
+            },
+            body: JSON.stringify({title, date, venue})
+        });
+
+        let data;
+        try { data = await res.json(); } catch { data = {}; }
+
+        if (!res.ok) {
+            showModal(data.error || `Failed to add activity. Status: ${res.status}`);
+            return;
+        }
+
+        showModal("Activity added successfully!");
+        document.getElementById("act_title").value = '';
+        document.getElementById("act_date").value = '';
+        document.getElementById("act_venue").value = '';
+        fetchActivities();
+
+    } catch (err) {
+        showModal("Network or server error while adding activity");
+        console.error(err);
+    }
+}
+
+
+// Delete activity
+async function deleteActivity(id) {
+    const res = await fetch(`${API}/activities/${id}/`, {
+        method: "DELETE",
+        headers: {"X-User-Code": userCode}
+    });
+    if (!res.ok) {
+        const data = await res.json();
+        showModal(data.error || "Failed to delete activity");
+        return;
+    }
+    showModal("Activity deleted successfully!");
+    fetchActivities();
+}
+
+// Edit activity
+async function editActivity(id) {
+    const title = prompt("New title:");
+    const date = prompt("New date (YYYY-MM-DD):");
+    const venue = prompt("New venue:");
+
+    try {
+        const res = await fetch(`${API}/activities/${id}/`, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json", "X-User-Code": userCode},
+            body: JSON.stringify({title, date, venue})
+        });
+
+        const data = await res.json();
+        if (!res.ok) showModal(data.error || "Failed to update activity");
+        else showModal("Activity updated successfully!");
+        fetchActivities();
+    } catch (err) {
+        showModal("Network or server error");
+        console.error(err);
+    }
+}
+
+// Initial fetch
+fetchActivities();
+</script>
+</body>
+</html>
