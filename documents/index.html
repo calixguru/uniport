@@ -40,7 +40,7 @@
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden bg-white border-t border-green-200 shadow-md md:hidden cursor-pointer">
     <nav class="flex flex-col p-4 space-y-4 text-green-800 font-medium">
-      <a href="/">Home</a>
+      <a href="../">Home</a>
       <a href="#library">Resource</a>
       <div id="loginStatusMobile"></div>
     </nav>
@@ -54,7 +54,7 @@ const userName = localStorage.getItem('name');
 function logout() {
   localStorage.removeItem('token');
   localStorage.removeItem('name');
-  window.location.href = 'login.html';
+  window.location.href = '/login';
 }
 
 function updateNav() {
