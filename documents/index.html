@@ -29,7 +29,7 @@
     </div>
 
     <nav class="hidden md:flex items-center gap-8 font-medium">
-      <a href="index.html" class="hover:text-green-700 transition">Home</a>
+      <a href="/" class="hover:text-green-700 transition">Home</a>
       <a href="#library" class="hover:text-green-700 transition">Resource</a>
       <div id="loginStatus"></div>
     </nav>
@@ -40,7 +40,7 @@
   <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden bg-white border-t border-green-200 shadow-md md:hidden cursor-pointer">
     <nav class="flex flex-col p-4 space-y-4 text-green-800 font-medium">
-      <a href="index.html">Home</a>
+      <a href="/">Home</a>
       <a href="#library">Resource</a>
       <div id="loginStatusMobile"></div>
     </nav>
@@ -69,12 +69,12 @@ function updateNav() {
       <button onclick="logout()" class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg">Logout</button>`;
   } else {
     loginBox.innerHTML = `
-      <a href="login.html" class="text-green-800 font-semibold hover:text-green-600 mr-4">Login</a>
-      <a href="register.html" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Register</a>
+      <a href="/login" class="text-green-800 font-semibold hover:text-green-600 mr-4">Login</a>
+      <a href="/register" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Register</a>
     `;
     mobileBox.innerHTML = `
-      <a href="login.html" class="font-bold m-3">Login</a> OR
-      <a href="register.html" class="font-bold m-3">Register</a>
+      <a href="/login" class="font-bold m-3">Login</a> OR
+      <a href="/register" class="font-bold m-3">Register</a>
     `;
   }
 }
