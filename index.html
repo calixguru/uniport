@@ -25,9 +25,9 @@
 
   @keyframes slideShow {
     0%   { background-image: url('background.jpg'); }
-    33%  { background-image: url('background.jpg?auto=compress&cs=tinysrgb&w=1200'); }
-    66%  { background-image: url('https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=1200'); }
-    100% { background-image: url('background.jpg'); }
+    33%  { background-image: url('background2.jpg?auto=compress&cs=tinysrgb&w=1200'); }
+    66%  { background-image: url('background.jpg?auto=compress&cs=tinysrgb&w=1200'); }
+    100% { background-image: url('background3.jpg'); }
 }
 </style>
 </head>
@@ -56,8 +56,8 @@
       `;
     } else {
       loginBox.innerHTML = `
-        <a href="login.html" class="text-green-800 font-semibold hover:text-green-600 mr-4">Login</a>
-        <a href="register.html" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Register</a>
+        <a href="/login" class="text-green-800 font-semibold hover:text-green-600 mr-4">Login</a>
+        <a href="/register" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">Register</a>
       `;
     }
   }
@@ -79,8 +79,8 @@
         <button onclick="logout()" class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg">Logout</button>`;
     } else {
       mobileBox.innerHTML = `
-        <a href="login.html" class="font-bold m-3">Login</a> OR
-        <a href="register.html" class="font-bold m-3">Register</a>
+        <a href="/login" class="font-bold m-3">Login</a> OR
+        <a href="/register" class="font-bold m-3">Register</a>
       `;
     }
   });
@@ -148,7 +148,8 @@
         </div>
       </div>
 
-      <a class="hover:text-green-700 transition" href="documents.html">Resource</a>
+      <a class="hover:text-green-700 transition" href="/documents">Resource</a>
+      <a class="hover:text-green-700 transition" href="#activity">Activity</a>
       <a class="hover:text-green-700 transition" href="#contact">Contact</a>
 
       <div id="loginStatus"></div>
@@ -203,7 +204,8 @@
         </div>
       </div>
 
-      <a href="documents.html">Resource</a>
+      <a href="/documents">Resource</a>
+      <a href="#activity">Activity</a>
       <a href="#contact">Contact</a>
       <div id="loginStatusMobile"></div>
     </nav>
@@ -223,8 +225,8 @@
       mobileBox.innerHTML = `Welcome, ${user} <br><button onclick="logout()" class="mt-2 px-4 py-2 bg-green-600 text-white rounded-lg">Logout</button>`;
     } else {
       mobileBox.innerHTML = `
-        <a href="login.html" class="font-bold m-3">Login</a>  OR 
-        <a href="register.html" class="font-bold m-3">Register</a>
+        <a href="/login" class="font-bold m-3">Login</a>  OR 
+        <a href="/register" class="font-bold m-3">Register</a>
       `;
     }
   });
@@ -246,12 +248,12 @@
       </p>
 
       <div class="flex gap-4">
-        <a data-protected="true" href="documents.html"
+        <a data-protected="true" href="/documents"
           class="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition">
           View Materials
         </a>
 
-        <a href="register.html"
+        <a href="/register"
           class="px-6 py-3 bg-white/20 border border-white text-white font-semibold rounded-xl hover:bg-white/30 transition">
           Become a Member
         </a>
@@ -302,6 +304,99 @@
 
   </div>
 </section>
+
+<!-- =======================
+     ACTIVITIES SECTION
+========================= -->
+<section id="activity" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-6">
+
+    <h2 class="text-4xl font-extrabold text-green-900 text-center mb-4">
+      ACTIVITIES
+    </h2>
+
+
+    <div class="flex space-x-4 overflow-x-auto pb-4 m-2">
+        
+        <!-- ACTIVITY CARD -->
+        <div onclick="openActivityModal(1)"
+            class="min-w-[250px] bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition">
+            <img src="advert1.jpg" class="w-full h-36 object-cover rounded-lg">
+            <h3 class="font-bold mt-2">ENGINEERING DESIGN</h3>
+            <p class="text-sm text-gray-500">Software tools for modern Engineering</p>
+            <p class="text-xs text-gray-400 mt-1">Friday, 12th December, 2025</p>
+        </div>
+
+        <!-- ACTIVITY CARD -->
+        <div onclick="openActivityModal(2)"
+            class="min-w-[250px] bg-white rounded-xl shadow p-4 cursor-pointer hover:scale-105 transition">
+            <img src="advert2.jpg" class="w-full h-36 object-cover rounded-lg">
+            <h3 class="font-bold mt-2">ENGINEERING YOUR FUTURE</h3>
+            <p class="text-sm text-gray-500">Going beyond the degree to suceed in the Industrial World</p>
+            <p class="text-xs text-gray-400 mt-1">Wednesday, 17th December, 2025</p>
+        </div>
+
+        <!-- Duplicate more activities as needed -->
+    </div>
+  </div>
+</section>
+
+
+
+
+<div id="modals" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="relative bg-white rounded-2xl shadow-lg w-11/12 max-w-lg p-6 text-center">
+        
+        <button class="absolute top-3 right-3 text-gray-400 hover:text-red-500 text-3xl"
+                onclick="hideModals()" aria-label="Close modal2">
+            &times;
+        </button>
+
+        <h2 id="modalTitle" class="text-lg font-bold text-gray-800 mb-4 uppercase"></h2>
+
+        <img id="modalImage" src="" class="w-full rounded-lg">
+
+        <p id="modalDetails" class="text-gray-600 mt-4 mb-2 text-md"></p>
+        <p id="modalDate" class="text-gray-400 text-sm"></p>
+
+        <div class="space-x-4 mt-4 font-extrabold text-center">
+          <img src="https://www.nsche.org/img/apple-touch-icon.png"
+          class="w-10 h-10 text-center">
+      </div>
+
+    </div>
+</div>
+
+<div id="modalss" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+  <div class="relative bg-white rounded-2xl shadow-lg w-11/12 max-w-lg p-6 text-center">
+      
+      <button
+          class="absolute top-3 right-3 text-gray-400 hover:text-red-500 focus:outline-none text-3xl"
+          onclick="hideModal()"
+          aria-label="Close modal"
+      >
+          &times;
+      </button>
+      <h2 class="text-lg font-bold text-gray-800 mb-4 hover:scale-500 transition duration-50 uppercase animate-pulse">
+          CALIXGURU
+          <span class=""
+          style="color: orange">
+          CBT</span>
+          ROOMS</h2>
+      <img src="advert1.jpg" style="height: 20%; width: 70%;" class="w-full">
+      <br>
+      <p class="text-gray-600 mb-6 text-md">
+         ENGINEERING DESIGN: Software tools for modern Engineering<br>
+         Friday, 12th December, 2025
+          
+      </p>
+      <div class="space-x-4 mt-4 font-extrabold text-center">
+          <img src="https://www.nsche.org/img/apple-touch-icon.png"
+          class="w-10 h-10 text-center">
+      </div>
+  </div>
+</div>
+
 
 <!-- ================= ACTIVITIES ================= -->
 <section id="team" class="py-20 bg-gray-50">
@@ -388,7 +483,7 @@ fetchTeam();
       </p>
     </div>
 
-    <a href="register.html"
+    <a href="/register"
        class="px-8 py-4 bg-white text-green-700 font-bold rounded-xl shadow-lg hover:bg-green-50 transition">
       Become a Member
     </a>
@@ -483,4 +578,109 @@ fetchTeam();
 
 
 </body>
+
+<script>
+    // Function to set a cookie
+    function setCookie(name, value, seconds) {
+        const date = new Date();
+        date.setTime(date.getTime() + seconds * 1000); // Convert seconds to milliseconds
+        document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+    }
+
+    // Function to get a cookie
+    function getCookie(name) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return null;
+    }
+
+    // Function to show the modal
+    function showModal() {
+        document.getElementById('modal').classList.remove('hidden');
+    }
+
+    // Function to hide the modal
+    function hideModal() {
+        document.getElementById('modal').classList.add('hidden');
+    }
+
+    // Main logic
+    window.onload = function () {
+        const lastModalTime = getCookie('lastModalTime'); // Check for the cookie
+        const now = new Date().getTime(); // Current time in milliseconds
+
+        // Check if the modal should display (3 hours = 10800 seconds)
+        if (!lastModalTime || now - parseInt(lastModalTime) >= 10800 * 1000) {
+            showModal(); // Show the modal
+            setCookie('lastModalTime', now.toString(), 10800); // Set the cookie for 3 hours
+        }
+    };
+</script>
+
+<script>
+
+    /* -----------------------------
+       ACTIVITY DATA (edit freely)
+    ------------------------------*/
+
+    const ACTIVITIES = {
+        1: {
+            title: "ENGINEERING DESIGN",
+            image: "advert1.jpg",
+            details: "Software tools for modern Engineering",
+            date: "Friday, 12th December, 2025"
+        },
+        2: {
+            title: "ENGINEERING YOUR FUTURE",
+            image: "advert2.jpg",
+            details: "Going beyond the degree to suceed in the Industrial World",
+            date: "Wednesday, 17th December, 2025"
+        },
+
+        // Add more activities here
+    };
+
+
+    /* ---------------------------------------------------------
+       ✅ THIS IS THE SPOT YOU ASKED FOR — MANUALLY INSERT ID
+       Example:
+       let selectedActivityId = 1;
+    ----------------------------------------------------------*/
+
+    let selectedActivityId = 1;  // ← YOU WILL CHANGE THIS ANY TIME
+
+
+
+    /* -----------------------------
+       MODAL FUNCTION
+    ------------------------------*/
+
+    function openActivityModal(id) {
+        selectedActivityId = id; // Keep selected ID
+
+        const activity = ACTIVITIES[id];
+
+        // Fill modal
+        document.getElementById("modalTitle").textContent = activity.title;
+        document.getElementById("modalImage").src = activity.image;
+        document.getElementById("modalDetails").textContent = activity.details;
+        document.getElementById("modalDate").textContent = "Date: " + activity.date;
+
+        // Show modal
+        document.getElementById("modals").classList.remove("hidden");
+    }
+
+    function hideModals() {
+        document.getElementById("modals").classList.add("hidden");
+    }
+
+</script>
+
+
+
 </html>
